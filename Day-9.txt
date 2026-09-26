@@ -562,3 +562,420 @@ INSERT INTO sales (sale_id, product, category, units_sold, unit_price, region) V
 (14, 'Bed',         'Furniture',   2, 25000, 'South'),
 (15, 'Mobile',      'Electronics', 14, 20000, 'North');
 
+mysql> CREATE TABLE sales (
+    ->    sale_id INT PRIMARY KEY,
+    ->    product VARCHAR(50),
+    ->    category VARCHAR(50),
+    ->    units_sold INT,
+    ->    unit_price INT,
+    ->    region VARCHAR(50)
+    -> );
+Query OK, 0 rows affected (0.06 sec)
+
+mysql>
+mysql> INSERT INTO sales (sale_id, product, category, units_sold, unit_price, region) VALUES
+    -> (1,  'Keyboard',    'Electronics', 10, 1200,  'North'),
+    -> (2,  'Monitor',     'Electronics', 5,  7000,  'South'),
+    -> (3,  'Chair',       'Furniture',   15, 2500,  'North'),
+    -> (4,  'Desk',        'Furniture',   7,  4500,  'West'),
+    -> (5,  'Mouse',       'Electronics', 20, 800,   'East'),
+    -> (6,  'Sofa',        'Furniture',   3,  15000, 'South'),
+    -> (7,  'Headphones',  'Electronics', 8,  1800,  'North'),
+    -> (8,  'Laptop',      'Electronics', 6,  55000, 'West'),
+    -> (9,  'Table',       'Furniture',   12, 6000,  'East'),
+    -> (10, 'Fan',         'HomeAppliance', 18, 3000, 'South'),
+    -> (11, 'AC',          'HomeAppliance', 4, 35000, 'North'),
+    -> (12, 'Cupboard',    'Furniture',   5, 12000, 'West'),
+    -> (13, 'Printer',     'Electronics', 9, 9000,  'East'),
+    -> (14, 'Bed',         'Furniture',   2, 25000, 'South'),
+    -> (15, 'Mobile',      'Electronics', 14, 20000, 'North');
+Query OK, 15 rows affected (0.01 sec)
+Records: 15  Duplicates: 0  Warnings: 0
+
+mysql> select * from sales;
++---------+------------+---------------+------------+------------+--------+
+| sale_id | product    | category      | units_sold | unit_price | region |
++---------+------------+---------------+------------+------------+--------+
+|       1 | Keyboard   | Electronics   |         10 |       1200 | North  |
+|       2 | Monitor    | Electronics   |          5 |       7000 | South  |
+|       3 | Chair      | Furniture     |         15 |       2500 | North  |
+|       4 | Desk       | Furniture     |          7 |       4500 | West   |
+|       5 | Mouse      | Electronics   |         20 |        800 | East   |
+|       6 | Sofa       | Furniture     |          3 |      15000 | South  |
+|       7 | Headphones | Electronics   |          8 |       1800 | North  |
+|       8 | Laptop     | Electronics   |          6 |      55000 | West   |
+|       9 | Table      | Furniture     |         12 |       6000 | East   |
+|      10 | Fan        | HomeAppliance |         18 |       3000 | South  |
+|      11 | AC         | HomeAppliance |          4 |      35000 | North  |
+|      12 | Cupboard   | Furniture     |          5 |      12000 | West   |
+|      13 | Printer    | Electronics   |          9 |       9000 | East   |
+|      14 | Bed        | Furniture     |          2 |      25000 | South  |
+|      15 | Mobile     | Electronics   |         14 |      20000 | North  |
++---------+------------+---------------+------------+------------+--------+
+15 rows in set (0.00 sec)
+
+mysql> select * from sales where category='electronics';
++---------+------------+-------------+------------+------------+--------+
+| sale_id | product    | category    | units_sold | unit_price | region |
++---------+------------+-------------+------------+------------+--------+
+|       1 | Keyboard   | Electronics |         10 |       1200 | North  |
+|       2 | Monitor    | Electronics |          5 |       7000 | South  |
+|       5 | Mouse      | Electronics |         20 |        800 | East   |
+|       7 | Headphones | Electronics |          8 |       1800 | North  |
+|       8 | Laptop     | Electronics |          6 |      55000 | West   |
+|      13 | Printer    | Electronics |          9 |       9000 | East   |
+|      15 | Mobile     | Electronics |         14 |      20000 | North  |
++---------+------------+-------------+------------+------------+--------+
+7 rows in set (0.00 sec)
+
+mysql> select * from sales where unit_price>10000;
++---------+----------+---------------+------------+------------+--------+
+| sale_id | product  | category      | units_sold | unit_price | region |
++---------+----------+---------------+------------+------------+--------+
+|       6 | Sofa     | Furniture     |          3 |      15000 | South  |
+|       8 | Laptop   | Electronics   |          6 |      55000 | West   |
+|      11 | AC       | HomeAppliance |          4 |      35000 | North  |
+|      12 | Cupboard | Furniture     |          5 |      12000 | West   |
+|      14 | Bed      | Furniture     |          2 |      25000 | South  |
+|      15 | Mobile   | Electronics   |         14 |      20000 | North  |
++---------+----------+---------------+------------+------------+--------+
+6 rows in set (0.00 sec)
+
+mysql> select * from sales product
+    -> from sales
+    -> where region='north';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'from sales
+where region='north'' at line 2
+mysql> select * from sales product where region='north';
++---------+------------+---------------+------------+------------+--------+
+| sale_id | product    | category      | units_sold | unit_price | region |
++---------+------------+---------------+------------+------------+--------+
+|       1 | Keyboard   | Electronics   |         10 |       1200 | North  |
+|       3 | Chair      | Furniture     |         15 |       2500 | North  |
+|       7 | Headphones | Electronics   |          8 |       1800 | North  |
+|      11 | AC         | HomeAppliance |          4 |      35000 | North  |
+|      15 | Mobile     | Electronics   |         14 |      20000 | North  |
++---------+------------+---------------+------------+------------+--------+
+5 rows in set (0.00 sec)
+
+mysql> select * from sales where units_sold=5%15;
++---------+----------+-------------+------------+------------+--------+
+| sale_id | product  | category    | units_sold | unit_price | region |
++---------+----------+-------------+------------+------------+--------+
+|       2 | Monitor  | Electronics |          5 |       7000 | South  |
+|      12 | Cupboard | Furniture   |          5 |      12000 | West   |
++---------+----------+-------------+------------+------------+--------+
+2 rows in set (0.00 sec)
+
+mysql> select * from sales where category='furniture' and unit_price>5000;
++---------+----------+-----------+------------+------------+--------+
+| sale_id | product  | category  | units_sold | unit_price | region |
++---------+----------+-----------+------------+------------+--------+
+|       6 | Sofa     | Furniture |          3 |      15000 | South  |
+|       9 | Table    | Furniture |         12 |       6000 | East   |
+|      12 | Cupboard | Furniture |          5 |      12000 | West   |
+|      14 | Bed      | Furniture |          2 |      25000 | South  |
++---------+----------+-----------+------------+------------+--------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT category, SUM(units_sold) AS total_units
+    -> FROM Sales
+    -> GROUP BY category
+    -> HAVING SUM(units_sold) > 20;
++---------------+-------------+
+| category      | total_units |
++---------------+-------------+
+| Electronics   |          72 |
+| Furniture     |          44 |
+| HomeAppliance |          22 |
++---------------+-------------+
+3 rows in set (0.08 sec)
+
+mysql> select regoin sum(unit_price) as total revenue from sales group by regoin having sum(unit_price)>50000;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'sum(unit_price) as total revenue from sales group by regoin having sum(unit_pric' at line 1
+mysql> select regoin sum(unit_price) as total revenue from sales group by regoin having sum(unit_price)>50000;^C
+mysql> select regoin sum(unit_price) as total revenue from sales group by regoin
+    ->  having sum(unit_price)>50000;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'sum(unit_price) as total revenue from sales group by regoin
+ having sum(unit_pr' at line 1
+mysql> select regoin ,sum(unit_price) as total revenue from sales group by regoin having sum(unit_price)>50000;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'revenue from sales group by regoin having sum(unit_price)>50000' at line 1
+mysql> select regoin, sum(unit_price) as total revenue from sales group by regoin having sum(unit_price)>50000;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'revenue from sales group by regoin having sum(unit_price)>50000' at line 1
+mysql> select regoin, sum(unit_price) as total_revenue from sales group by regoin having sum(unit_price)>50000;
+ERROR 1054 (42S22): Unknown column 'regoin' in 'field list'
+mysql> select regoin, sum(unit_price) as total_revenue from sales group by unit_price having sum(unit_price)>50000;
+ERROR 1054 (42S22): Unknown column 'regoin' in 'field list'
+mysql> SELECT region, SUM(quantity * unit_price) AS total_revenue
+    -> FROM Sales
+    -> GROUP BY region
+    -> HAVING SUM(quantity * unit_price) > 50000;
+ERROR 1054 (42S22): Unknown column 'quantity' in 'field list'
+mysql> SELECT region, SUM(unit_price) AS total_revenue
+    -> FROM Sales
+    -> GROUP BY region
+    -> HAVING SUM(quantity * unit_price) > 50000;
+ERROR 1054 (42S22): Unknown column 'quantity' in 'having clause'
+mysql> SELECT region, SUM(unit_price) AS total_revenue
+    -> FROM Sales
+    -> GROUP BY region
+    -> HAVING SUM(unit_price) > 50000;
++--------+---------------+
+| region | total_revenue |
++--------+---------------+
+| North  |         60500 |
+| West   |         71500 |
++--------+---------------+
+2 rows in set (0.00 sec)
+
+mysql> SELECT category, COUNT(*) AS product_count
+    -> FROM Products
+    -> GROUP BY category
+    -> HAVING COUNT(*) > 2;
+ERROR 1054 (42S22): Unknown column 'category' in 'field list'
+mysql> SELECT category, COUNT(*) AS product_count
+    -> FROM sales
+    -> GROUP BY category
+    -> HAVING COUNT(*) > 2;
++-------------+---------------+
+| category    | product_count |
++-------------+---------------+
+| Electronics |             7 |
+| Furniture   |             6 |
++-------------+---------------+
+2 rows in set (0.04 sec)
+
+mysql> SELECT category, AVG(unit_price) AS avg_price
+    -> FROM sales
+    -> GROUP BY category
+    -> HAVING AVG(unit_price) < 5000;
+Empty set (0.06 sec)
+
+mysql> SELECT category, AVG(unit_price) AS avg_price
+    -> FROM sales
+    -> GROUP BY category
+    -> HAVING AVG(unit_price) < 15000;
++-------------+------------+
+| category    | avg_price  |
++-------------+------------+
+| Electronics | 13542.8571 |
+| Furniture   | 10833.3333 |
++-------------+------------+
+2 rows in set (0.04 sec)
+
+mysql> ^C
+mysql> SELECT category, SUM(units_sold) AS total_units
+    -> FROM sales
+    -> GROUP BY category
+    -> ORDER BY total_units DESC;
++---------------+-------------+
+| category      | total_units |
++---------------+-------------+
+| Electronics   |          72 |
+| Furniture     |          44 |
+| HomeAppliance |          22 |
++---------------+-------------+
+3 rows in set (0.00 sec)
+
+mysql> select region, avg(unit_price) from sales group by regoin order by regoin alphabetically;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'alphabetically' at line 1
+mysql> select region, avg(unit_price) from sales group by regoin order by regoin;
+ERROR 1054 (42S22): Unknown column 'regoin' in 'group statement'
+mysql> select region, avg(unit_price) from sales group by regoin order by regoin asc;
+ERROR 1054 (42S22): Unknown column 'regoin' in 'group statement'
+mysql> select region, avg(unit_price) from as avg_price sales group by regoin order by regoin asc;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'as avg_price sales group by regoin order by regoin asc' at line 1
+mysql> SELECT region, AVG(unit_price) AS avg_price
+    -> FROM sales
+    -> GROUP BY region
+    -> ORDER BY region ASC;
++--------+------------+
+| region | avg_price  |
++--------+------------+
+| East   |  5266.6667 |
+| North  | 12100.0000 |
+| South  | 12500.0000 |
+| West   | 23833.3333 |
++--------+------------+
+4 rows in set (0.04 sec)
+
+mysql> select region, avg(unit_price) from sales as avg_price sales group by regoin order by regoin asc;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'sales group by regoin order by regoin asc' at line 1
+mysql> SELECT category, SUM(units_sold * unit_price) AS total_revenue
+    -> FROM sales
+    -> GROUP BY category
+    -> ORDER BY total_revenue DESC;
++---------------+---------------+
+| category      | total_revenue |
++---------------+---------------+
+| Electronics   |        768400 |
+| Furniture     |        296000 |
+| HomeAppliance |        194000 |
++---------------+---------------+
+3 rows in set (0.00 sec)
+
+mysql> SELECT region, COUNT(*) AS product_count
+    -> FROM sales
+    -> GROUP BY region
+    -> ORDER BY product_count DESC;
++--------+---------------+
+| region | product_count |
++--------+---------------+
+| North  |             5 |
+| South  |             4 |
+| West   |             3 |
+| East   |             3 |
++--------+---------------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT region, SUM(units_sold) AS total_units
+    -> FROM sales
+    -> GROUP BY region
+    -> ORDER BY region ASC;
++--------+-------------+
+| region | total_units |
++--------+-------------+
+| East   |          41 |
+| North  |          51 |
+| South  |          28 |
+| West   |          18 |
++--------+-------------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT region, SUM(units_sold * unit_price) AS total_revenue
+    -> FROM sales
+    -> GROUP BY region
+    -> HAVING SUM(units_sold * unit_price) > 20000
+    -> ORDER BY total_revenue DESC;
++--------+---------------+
+| region | total_revenue |
++--------+---------------+
+| North  |        483900 |
+| West   |        421500 |
+| South  |        184000 |
+| East   |        169000 |
++--------+---------------+
+4 rows in set (0.06 sec)
+
+mysql> select category, sum(total_unit) as total_unit
+    -> from sales
+    -> group by region
+    -> having sum(total_units)>10
+    -> order by category asc;
+ERROR 1054 (42S22): Unknown column 'total_unit' in 'field list'
+mysql> select category, sum(units_sold) as total_unit
+    -> from sales
+    -> group by region
+    -> having sum(units_sold)>10
+    -> order by category asc;
+ERROR 1055 (42000): Expression #1 of SELECT list is not in GROUP BY clause and contains nonaggregated column 'da7.sales.category' which is not functionally dependent on columns in GROUP BY clause; this is incompatible with sql_mode=only_full_group_by
+    -> ^C
+mysql> SELECT category, SUM(units_sold) AS total_units
+    -> FROM sales
+    -> GROUP BY category
+    -> HAVING SUM(units_sold) > 10
+    -> ORDER BY category ASC;
++---------------+-------------+
+| category      | total_units |
++---------------+-------------+
+| Electronics   |          72 |
+| Furniture     |          44 |
+| HomeAppliance |          22 |
++---------------+-------------+
+3 rows in set (0.04 sec)
+
+mysql> SELECT region, COUNT(*) AS product_count
+    -> FROM sales
+    -> GROUP BY region
+    -> HAVING COUNT(*) > 1
+    -> ORDER BY region ASC;
++--------+---------------+
+| region | product_count |
++--------+---------------+
+| East   |             3 |
+| North  |             5 |
+| South  |             4 |
+| West   |             3 |
++--------+---------------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT category, AVG(unit_price) AS avg_price
+    -> FROM sales
+    -> GROUP BY category
+    -> HAVING AVG(unit_price) < 6000
+    -> ORDER BY avg_price ASC;
+Empty set (0.00 sec)
+
+mysql> SELECT region, SUM(units_sold) AS total_units
+    -> FROM sales
+    -> WHERE category = 'Electronics'
+    -> GROUP BY region
+    -> HAVING SUM(units_sold) > 15
+    -> ORDER BY total_units DESC;
++--------+-------------+
+| region | total_units |
++--------+-------------+
+| North  |          32 |
+| East   |          29 |
++--------+-------------+
+2 rows in set (0.00 sec)
+
+mysql> SELECT region, SUM(units_sold) AS total_units
+    -> FROM sales
+    -> WHERE category = 'Electronics'
+    -> GROUP BY region
+    -> HAVING SUM(units_sold) > 15
+    -> ORDER BY total_units DESC;
++--------+-------------+
+| region | total_units |
++--------+-------------+
+| North  |          32 |
+| East   |          29 |
++--------+-------------+
+2 rows in set (0.00 sec)
+
+mysql> SELECT region, AVG(unit_price) AS avg_price
+    -> FROM sales
+    -> WHERE units_sold >= 5
+    -> GROUP BY region
+    -> HAVING AVG(unit_price) > 5000
+    -> ORDER BY region ASC;
++--------+------------+
+| region | avg_price  |
++--------+------------+
+| East   |  5266.6667 |
+| North  |  6375.0000 |
+| West   | 23833.3333 |
++--------+------------+
+3 rows in set (0.00 sec)
+
+mysql> SELECT category, COUNT(*) AS product_count
+    -> FROM sales
+    -> WHERE region IN ('North', 'South')
+    -> GROUP BY category
+    -> HAVING COUNT(*) > 2
+    -> ORDER BY product_count DESC;
++-------------+---------------+
+| category    | product_count |
++-------------+---------------+
+| Electronics |             4 |
+| Furniture   |             3 |
++-------------+---------------+
+2 rows in set (0.00 sec)
+
+mysql> SELECT region, SUM(units_sold * unit_price) AS total_revenue
+    -> FROM sales
+    -> WHERE unit_price < 10000
+    -> GROUP BY region
+    -> HAVING SUM(units_sold * unit_price) > 50000
+    -> ORDER BY total_revenue DESC;
++--------+---------------+
+| region | total_revenue |
++--------+---------------+
+| East   |        169000 |
+| South  |         89000 |
+| North  |         63900 |
++--------+---------------+
+3 rows in set (0.00 sec)
+
+mysql>
